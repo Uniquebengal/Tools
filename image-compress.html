@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Previous meta tags and title remain same -->
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #4f46e5;
+            --accent-color: #8b5cf6;
+            --background: #f8fafc;
+            --text-color: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.5;
+            min-height: 100vh;
+            background-color: var(--background);
+            color: var(--text-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        .compression-interface {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-upload-area {
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.75rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--primary-color);
+            background: #f8fafc;
+        }
+
+        .quality-control {
+            margin: 2rem 0;
+        }
+
+        .slider-container {
+            width: 100%;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .preview-box {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            object-fit: contain;
+            background: #f1f5f9;
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.875rem 2rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .ads-section {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 1rem;
+            height: fit-content;
+        }
+
+        footer {
+            background: var(--text-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .ads-section {
+                position: static;
+                margin-top: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .file-upload-area {
+                padding: 2rem 1rem;
+            }
+
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Loading spinner */
+        .loader {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #fff;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg) }
+            100% { transform: rotate(360deg) }
+        }
+
+        /* Drag and drop effects */
+        .drag-over {
+            border-color: var(--primary-color) !important;
+            background: rgba(99, 102, 241, 0.1) !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Image Optimizer Pro</h1>
+            <p>Compress and optimize images without quality loss</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Ad unit remains same -->
+        
+        <div class="main-content">
+            <div class="compression-interface">
+                <div class="file-upload-area" id="dropZone">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-cloud-upload" width="48" height="48" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M7 18a4.6 4.4 0 0 1 0 -9a5 4.5 0 0 1 11 2h1a3.5 3.5 0 0 1 0 7h-1" />
+                        <polyline points="9 15 12 12 15 15" />
+                        <line x1="12" y1="12" x2="12" y2="21" />
+                    </svg>
+                    <p class="drag-text">Drag and drop images here</p>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                    <label for="imageInput" class="file-label">
+                        <button>Or Choose File</button>
+                    </label>
+                </div>
+
+                <div class="quality-control">
+                    <div class="flex justify-between mb-4">
+                        <span>Compression Level</span>
+                        <span id="qualityValue" class="font-bold">80%</span>
+                    </div>
+                    <div class="slider-container">
+                        <input type="range" class="slider" id="qualitySlider" min="1" max="100" value="80">
+                    </div>
+                </div>
+
+                <button id="compressBtn" onclick="compressImage()">
+                    <span class="btn-text">Compress Now</span>
+                </button>
+
+                <div class="image-preview">
+                    <!-- Preview boxes remain same but with improved styling -->
+                </div>
+            </div>
+
+            <!-- Ads section remains same -->
+        </div>
+    </main>
+
+    <script>
+        // Add drag and drop functionality
+        const dropZone = document.getElementById('dropZone');
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if(files.length > 0) {
+                imageInput.files = files;
+                handleImageUpload(files[0]);
+            }
+        });
+
+        // Improved loading state
+        async function compressImage() {
+            const btn = document.getElementById('compressBtn');
+            const originalText = btn.innerHTML;
+            
+            try {
+                btn.innerHTML = `<div class="loader"></div> Processing...`;
+                btn.disabled = true;
+                
+                // Existing compression logic
+                
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            } catch (error) {
+                btn.innerHTML = `⚠️ Try Again`;
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }, 2000);
+            }
+        }
+
+        // Add responsive image preview
+        function handleImageUpload(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                originalPreview.src = e.target.result;
+                originalPreview.hidden = false;
+                originalPreview.onload = () => {
+                    URL.revokeObjectURL(originalPreview.src);
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
